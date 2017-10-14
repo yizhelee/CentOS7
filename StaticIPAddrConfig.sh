@@ -89,7 +89,7 @@ update() {
 grep IPADDR /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME > /dev/null
 [ $? -eq 0 ] && update || add
 
-grep "nameservers *$DNS" /etc/resolv.conf
+grep "nameserver *$DNS" /etc/resolv.conf
 [ $? -eq 0 ] || sed -i.bak "/^# *Generated *by *NetworkManager/a nameserver $DNS" /etc/resolv.conf 
 rm -f /etc/resolv.conf.bak
 
