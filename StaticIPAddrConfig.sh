@@ -5,6 +5,8 @@ VERBOSE=false
 INTERFACE_NAME=
 IP_ADDR=""
 NETMASK=""
+GATEWAY="10.1.0.1"
+DNS="10.1.0.1"
 
 # Help information
 show_help() {
@@ -69,28 +71,27 @@ fi
 # Add static IP Address configuration to the given network interface
 add() {
   sed -i.bak "s|BOOTPROTO=.*|BOOTPROTO=static|g" /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME
-  sed -i.bak "/BOOTPROTO=.*/a IPADDR=$IP_ADDR\nNETMASK=$NETMASK\nNM_CONTROLLED=no" /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME
+  sed -i.bak "/BOOTPROTO=.*/a IPADDR=$IP_ADDR\nNETMASK=$NETMASK\nGATEWAY=$GATEWAY" /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME
   sed -i.bak "s|ONBOOT=.*|ONBOOT=yes|g" /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME
   rm -f /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME.bak
 }
 
 # Change static IP Address
-change() {
+update() {
   sed -i.bak "s|BOOTPROTO=.*|BOOTPROTO=static|g"      /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME
   sed -i.bak "s|IPADDR=.*|IPADDR=$IP_ADDR|g"          /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME
   sed -i.bak "s|NETMASK=.*|NETMASK=$NETMASK|g"        /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME
-  sed -i.bak "s|NM_CONTROLLED=.*|NM_CONTROLLED=no|g" /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME
+  sed -i.bak "s|GATEWAY=.*|NETMASK=$GATEWAY|g"        /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME
   sed -i.bak "s|ONBOOT=.*|ONBOOT=yes|g"               /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME
   rm -f /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME.bak
 }
 
 grep IPADDR /etc/sysconfig/network-scripts/ifcfg-$INTERFACE_NAME > /dev/null
-if [ $? -eq 0 ];
-then
-  change
-else
-  add
-fi
+[ $? -eq 0 ] && update || add
+
+grep "nameservers *$DNS" /etc/resolv.conf
+[ $? -eq 0 ] || sed -i.bak "/^# *Generated *by *NetworkManager/a nameserver $DNS" /etc/resolv.conf 
+rm -f /etc/resolv.conf.bak
 
 echo "New IP Address : $IP_ADDR"
 systemctl restart network.service
@@ -100,4 +101,3 @@ systemctl status network.service
 
 #sudo xcodebuild -license accept
 #sshpass -p "yli" scp ./staticIP.sh root@10.1.0.153:/root
-
