@@ -1,27 +1,20 @@
 # CentOS7
 
-## Installation
-<span style="color:blue">Download *DVD* ISO</span>
-
-Make bootable USB from ISO file : 
-dd bs=512m if=/Users/yizli/Downloads/CentOS/CentOS-7-x86_64-DVD-1708.iso of=/dev/disk2; sync
-
-List USB device in MacOS : 
-diskutil list
-
-## Install NVidia :
-* Press 'e', add ' 3 ' to the end of line "linux64 .....", Then press ctrl+x to enter to command line
-* After enter commandline 
+## Make up CentOS 7 Bootable USB on MacOS System
+* <span style="color:blue">Download **DVD** ISO</span> from https://www.centos.org/download/ 
+* List USB device in MacOS : `diskutil list`
+* Flash USB with downloaded ISO file using `dd` :
 ```
-login as root
-sudo -i
+dd bs=512m if=/Users/yizli/Downloads/CentOS/CentOS-7-x86_64-DVD-1708.iso oflag=direct of=/dev/disk2; sync
+```
+due to missing Installation of Nvidia driver. In fact, 
+## I've got the problem as PC is hanging on boot screen when first booting after CentOS 7 installation. This might be due to incorrect installation of Nvidia driver. 
+**Solution** : reinstall nvidia using **`bumblebee`** 
+* Press **`e`**, add **`3`** to the end of **line `linux64 .....`**, Then press **`ctrl+x`** to enter to command line
+* Once you enter commandline interface, please login as root :
 
+```
 yum update
-
-Systemctl restart gdm.service
-
-
-
 
 lspci -nn | grep -i nvidia
 
@@ -75,16 +68,8 @@ vi /usr/share/applications/nvidia-settings.desktop :
 Exec=optirun nvidia-settings -c :8.0
 ...
 ```
+Then restart GDM(GNOME Display Manager)
 ```
 systemctl restart gdm.service
 ```
-
-
-
-
-
-
-
-
-
 
