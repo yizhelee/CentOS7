@@ -7,7 +7,7 @@
 ```
 dd bs=512m if=/Users/yizli/Downloads/CentOS/CentOS-7-x86_64-DVD-1708.iso oflag=direct of=/dev/disk2; sync
 ```
-due to missing Installation of Nvidia driver. In fact, 
+
 ## I've got the problem as PC is hanging on boot screen when first booting after CentOS 7 installation. This might be due to incorrect installation of Nvidia driver. 
 **Solution** : reinstall nvidia using **`bumblebee`** 
 * Press **`e`**, add **`3`** to the end of **line `linux64 .....`**, Then press **`ctrl+x`** to enter to command line
@@ -30,7 +30,7 @@ yum install -y VirtualGL
 
 usermod -a -G bumblebee yli
 ```
-vi /etc/bumblebee/bumblebee.conf
+* Open and modify bumblebee config: `vi /etc/bumblebee/bumblebee.conf`
 ```
 [bumblebeed]
 VirtualDisplay=:8
@@ -62,13 +62,13 @@ XorgConfFile=/etc/bumblebee/xorg.conf.nouveau
 
 ```
 
-vi /usr/share/applications/nvidia-settings.desktop :
+* Open & Modify nvidia settings : `vi /usr/share/applications/nvidia-settings.desktop` :
 ```
 ...
 Exec=optirun nvidia-settings -c :8.0
 ...
 ```
-Then restart GDM(GNOME Display Manager)
+* Then restart GDM(GNOME Display Manager)
 ```
 systemctl restart gdm.service
 ```
