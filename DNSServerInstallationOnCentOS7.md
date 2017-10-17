@@ -74,7 +74,7 @@ More details about private network & local machines :
   ...
   
   # systemctl enable named.service
-  # systemctl start/restart named service
+  # systemctl restart named.service
   # netstat -antu | grep -w 53
   tcp        0      0 10.1.0.156:53           0.0.0.0:*               LISTEN     
   tcp        0      0 127.0.0.1:53            0.0.0.0:*               LISTEN     
