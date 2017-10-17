@@ -3,7 +3,7 @@
 More details about private network & local machines :
 
 > master : 10.1.0.156
-> workers : worker1(10.1.0.157), worker2(10.1.0.158), worker3(10.1.0.159), ...
+> workers : worker2(10.1.0.157), worker3(10.1.0.158), worker4(10.1.0.159), ...
 > private network address : 10.1.0.0/24
 > private network name : lab.local
 
@@ -16,8 +16,8 @@ More details about private network & local machines :
   ```
   - **Worker**
   ```
-  hostnamectl set-hostname worker1.lab.local
-  echo "10.1.0.157 worker1.lab.local worker1"
+  hostnamectl set-hostname worker2.lab.local
+  echo "10.1.0.157 worker2.lab.local worker2"
   ```
 - Verify configuration :
   ```
@@ -132,7 +132,7 @@ More details about private network & local machines :
   @    IN     A      10.1.0.156
 
   master              IN       A       10.1.0.156
-  worker1             IN       A       10.1.0.157
+  worker2             IN       A       10.1.0.157
   EOF
   
   cat << EOF >> /var/named/reverse.lab 
@@ -148,10 +148,10 @@ More details about private network & local machines :
   @    IN     PTR    lab.local.
 
   master        IN       A       10.1.0.156
-  worker1       IN       A       10.1.0.157
+  worker2       IN       A       10.1.0.157
 
   156       IN     PTR   master.lab.local.
-  157       IN     PTR   worker1.lab.local.
+  157       IN     PTR   worker2.lab.local.
   EOF
   ```
 7. Set permission on configure file & directory and restore files default SELinux security contexts
