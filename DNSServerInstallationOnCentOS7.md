@@ -196,27 +196,27 @@ More details about private network & local machines :
 
   156.0.1.10.in-addr.arpa	name = master.lab.local.
   
-  # nslookup worker1
+  # nslookup worker2
   Server:		10.1.0.156
   Address:	10.1.0.156#53
 
-  Name:	worker1.lab.local
+  Name:	worker2.lab.local
   Address: 10.1.0.157
 
   # nslookup 10.1.0.157
   Server:		10.1.0.156
   Address:	10.1.0.156#53
 
-  157.0.1.10.in-addr.arpa	name = worker1.lab.local.
+  157.0.1.10.in-addr.arpa	name = worker2.lab.local.
 
   # dig @10.1.0.156 lab.local
 
-  ; <<>> DiG 9.9.4-RedHat-9.9.4-50.el7 <<>> @10.1.0.156 lab.local
+  ; <<>> DiG 9.9.4-RedHat-9.9.4-51.el7 <<>> @10.1.0.156 lab.local
   ; (1 server found)
   ;; global options: +cmd
   ;; Got answer:
-  ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 23654
-  ;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1
+  ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 13122
+  ;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 2
 
   ;; OPT PSEUDOSECTION:
   ; EDNS: version: 0, flags:; udp: 4096
@@ -227,13 +227,13 @@ More details about private network & local machines :
   lab.local.		86400	IN	A	10.1.0.156
 
   ;; AUTHORITY SECTION:
-  lab.local.		86400	IN	NS	master.opensky.home.
+  lab.local.		86400	IN	NS	master.lab.local.
 
-  ;; Query time: 1 msec
+  ;; ADDITIONAL SECTION:
+  master.lab.local.	86400	IN	A	10.1.0.156
+
+  ;; Query time: 0 msec
   ;; SERVER: 10.1.0.156#53(10.1.0.156)
-  ;; WHEN: Mon Oct 16 15:54:43 CEST 2017
-  ;; MSG SIZE  rcvd: 87
-
-  Name:	worker1.lab.local
-  Address: 10.1.0.157
+  ;; WHEN: Tue Oct 17 05:32:11 CEST 2017
+  ;; MSG SIZE  rcvd: 91
   ```
