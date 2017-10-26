@@ -50,7 +50,7 @@ hostnamectl status
 sshpass -p "yli" ssh root@10.1.0.156 "\             
 echo '$HOSTNAME              IN       A       $IP_ADDR' >> /var/named/forward.lab && \
 echo '$LAST       IN     PTR   $HOSTNAME.lab.local.' >> /var/named/reverse.lab    && \
-sed -i.bak '/^master.*/a $HOSTNAME       IN       A       $IP_ADDR'^Cvar/named/reverse.lab && \
+sed -i.bak '/^master.*/a $HOSTNAME       IN       A       $IP_ADDR' /var/named/reverse.lab && \
 rm -rf /var/named/reverse.lab.bak"
 
 # Update Static IP Addr
