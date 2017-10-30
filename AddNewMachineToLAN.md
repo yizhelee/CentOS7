@@ -74,3 +74,6 @@ sudo groupadd docker
 sudo usermod -aG docker  $USER
 echo $USER
 
+# For Laptop, stop to turn off WIFI because of power saver
+cat "setterm -powersave off -blank 0" >> /etc/rc.d/rc.local
+
